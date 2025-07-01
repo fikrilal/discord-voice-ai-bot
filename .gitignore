@@ -1,0 +1,15 @@
+node_modules/
+.env
+*.log
+logs/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.tmp
+*.temp
+coverage/
+.nyc_output/
+.cache/
+dist/
+build/

@@ -9,12 +9,10 @@ async function testToken() {
       process.env.DISCORD_TOKEN
     );
 
-    // Try to get bot user info
     const user = await rest.get("/users/@me");
     console.log(`✅ Token valid! Bot: ${user.username}#${user.discriminator}`);
     console.log(`   Bot ID: ${user.id}`);
 
-    // Check if client ID matches
     if (user.id === process.env.DISCORD_CLIENT_ID) {
       console.log("✅ Client ID matches bot ID");
     } else {

@@ -1,9 +1,8 @@
 const { OpenAI } = require("openai");
-const logger = require("./src/utils/logger");
+const logger = require("../src/utils/logger");
 
 console.log("🧪 Testing Discord Voice AI Bot components...\n");
 
-// Test 1: Environment variables
 console.log("1. Testing environment variables...");
 if (
   process.env.DISCORD_TOKEN &&
@@ -23,7 +22,6 @@ if (
   console.log("   ❌ OPENAI_API_KEY not configured");
 }
 
-// Test 2: Logger
 console.log("\n2. Testing logger...");
 try {
   logger.info("Test log message");
@@ -32,7 +30,6 @@ try {
   console.log("   ❌ Logger error:", error.message);
 }
 
-// Test 3: OpenAI connection (if API key is set)
 console.log("\n3. Testing OpenAI connection...");
 if (
   process.env.OPENAI_API_KEY &&
@@ -50,7 +47,6 @@ if (
   console.log("   ⏩ Skipped (API key not configured)");
 }
 
-// Test 4: Discord.js modules
 console.log("\n4. Testing Discord.js modules...");
 try {
   const { Client, GatewayIntentBits } = require("discord.js");
@@ -60,7 +56,6 @@ try {
   console.log("   ❌ Discord.js error:", error.message);
 }
 
-// Test 5: Required directories
 console.log("\n5. Testing required directories...");
 const fs = require("fs");
 

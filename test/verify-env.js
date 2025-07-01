@@ -3,7 +3,6 @@ require("dotenv").config();
 console.log("🔍 Environment Variables Check:");
 console.log("================================");
 
-// Check if variables exist (without showing full values for security)
 const discordToken = process.env.DISCORD_TOKEN;
 const clientId = process.env.DISCORD_CLIENT_ID;
 const guildId = process.env.DISCORD_GUILD_ID;
@@ -51,7 +50,6 @@ if (!openaiKey || openaiKey === "your_openai_api_key_here") {
   console.log("❌ OpenAI API key not configured properly");
 }
 
-// Check if token format looks correct
 if (discordToken && !discordToken.startsWith("MTM")) {
   console.log(
     "⚠️  Discord token format looks unusual (should start with letters/numbers)"

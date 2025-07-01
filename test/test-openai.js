@@ -9,7 +9,6 @@ async function testOpenAI() {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    // Test with a simple completion
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [

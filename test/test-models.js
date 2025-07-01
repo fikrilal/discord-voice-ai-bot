@@ -9,7 +9,6 @@ async function testNewModels() {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    // Test GPT-4o-mini for chat
     console.log("\n1. Testing gpt-4o-mini for chat...");
     const chatResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -21,7 +20,6 @@ async function testNewModels() {
       chatResponse.choices[0].message.content
     );
 
-    // Test TTS model
     console.log("\n2. Testing gpt-4o-mini-tts...");
     try {
       const ttsResponse = await openai.audio.speech.create({
@@ -40,7 +38,6 @@ async function testNewModels() {
       console.log("   Falling back to standard tts-1 model");
     }
 
-    // Note: We can't easily test transcription without an audio file
     console.log(
       "\n3. Transcription model will be tested when audio is processed"
     );

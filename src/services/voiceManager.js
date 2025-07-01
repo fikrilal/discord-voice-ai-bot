@@ -75,11 +75,21 @@ class VoiceManager {
       return;
     }
 
-    const audioStream = this.connection.receiver.subscribe(userId, {
+    const opusStream = this.connection.receiver.subscribe(userId, {
       end: {
         behavior: EndBehaviorType.Manual, // manual control for better audio capture
       },
     });
+
+    // decode OPUS -> PCM (16-bit LE, 48kHz, stereo)
+    const prism = require("prism-media");
+    const decoder = new prism.opus.Decoder({
+      frameSize: 960,
+      channels: 2,
+      rate: 48000,
+    });
+
+    const pcmStream = opusStream.pipe(decoder);
 
     const chunks = [];
     let lastAudioTime = Date.now();
@@ -88,7 +98,8 @@ class VoiceManager {
 
     // track this recording session with timers
     const recordingSession = {
-      audioStream,
+      audioStream: opusStream,
+      decoder,
       chunks,
       silenceTimer: null,
       maxTimer: null,
@@ -109,7 +120,7 @@ class VoiceManager {
       this.finishRecording(userId, "timeout");
     }, MAX_RECORDING_TIME);
 
-    audioStream.on("data", (chunk) => {
+    pcmStream.on("data", (chunk) => {
       chunks.push(chunk);
       lastAudioTime = Date.now();
 
@@ -122,12 +133,12 @@ class VoiceManager {
       }
     });
 
-    audioStream.on("end", () => {
+    pcmStream.on("end", () => {
       this.finishRecording(userId, "ended");
     });
 
-    audioStream.on("error", (error) => {
-      logger.error("Audio stream error:", error);
+    pcmStream.on("error", (error) => {
+      logger.error("PCM stream error:", error);
       this.finishRecording(userId, "error");
     });
   }
